@@ -1,10 +1,12 @@
 package com.ziper;
 
+import java.io.IOException;
+
 public class Main {
 
     private static Main instance = new Main();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         String filePath = instance.findFilePath(args);
         if (filePath == null) {
