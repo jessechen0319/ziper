@@ -1,5 +1,7 @@
 package com.ziper;
 
+import com.ziper.util.BytesContentReader;
+
 public class FileHeaderVisitor extends ZipVisitor{
 
     /**
@@ -21,6 +23,7 @@ public class FileHeaderVisitor extends ZipVisitor{
 
     @Override
     public void visit(byte[] content) {
-
+        BytesContentReader bytesContentReader = new BytesContentReader(content);
+        
     }
 }
