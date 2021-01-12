@@ -10,6 +10,22 @@ public class BytesContentReader {
 		this.content = bytes;
 	}
 	
+	public int readUInt_2(){
+		int result = 0x0000;
+		
+		if (content.length < 2+position) {
+			throw new RuntimeException("out of bounds");
+		}
+		
+		int val1 = content[position];
+		int val2 = content[position+1];
+		position += 2;
+		
+		result = val2 << 8 | val1;
+		
+		return result;
+	}
+	
 	public int readUInt_4(){
 		int result = 0x00;
 		if (content.length < 4+position) {
@@ -27,6 +43,16 @@ public class BytesContentReader {
 		position +=4;
 		
 		return result;
+	}
+	
+	public void readByte(byte[] bytes){
+		if (bytes.length + position > content.length) {
+			throw new RuntimeException("out of bounds");
+		}
+		for (int i = 0; i < bytes.length; i++) {
+			bytes[i] = content[position];
+			position +=1;
+		}
 	}
 	
 }
