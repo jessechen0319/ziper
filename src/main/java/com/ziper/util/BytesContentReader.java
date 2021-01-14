@@ -1,7 +1,11 @@
 package com.ziper.util;
 
 public class BytesContentReader {
-	
+
+	public int getPosition() {
+		return position;
+	}
+
 	protected int position = 0;
 	
 	private byte[] content;

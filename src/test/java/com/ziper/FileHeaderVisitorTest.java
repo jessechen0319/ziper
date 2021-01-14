@@ -1,6 +1,7 @@
 package com.ziper;
 
 import junit.framework.TestCase;
+import org.junit.Test;
 
 import java.nio.charset.Charset;
 
@@ -50,5 +51,29 @@ public class FileHeaderVisitorTest extends TestCase {
         visitor.visit(content);
         byte[] compressionData = visitor.getCompressionData();
         assertEquals("1", new String(compressionData, Charset.forName("ascii")));
+        
+    }
+
+    @Test
+    public void testMagicHeader() {
+        byte[] bytes = new byte[]{
+                0x50,
+                0x4B,
+                0x03,
+                0x04  
+        };
+        assertTrue(FileHeaderVisitor.testMagicHeader(bytes));
+        
+    }
+
+    @Test
+    public void testMagicHeader_false() {
+        byte[] bytes = new byte[]{
+                0x50,
+                0x4B,
+                0x01,
+                0x02
+        };
+        assertTrue(!FileHeaderVisitor.testMagicHeader(bytes));
     }
 }

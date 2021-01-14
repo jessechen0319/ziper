@@ -17,6 +17,26 @@ public class FileHeaderVisitor extends ZipVisitor{
     private int extraFieldLength;
     private byte[] fileNameContent;
 
+    public int getLength() {
+        return length;
+    }
+
+    private int length;
+    
+    private final  static int MAGIC_CODE = 0x04034B50;
+    
+    public static boolean testMagicHeader(byte[] content){
+        if (content.length<4){
+            return false;
+        }
+        BytesContentReader bytesContentReader = new BytesContentReader(content);
+        try {
+            return MAGIC_CODE == bytesContentReader.readUInt_4();
+        } finally {
+            bytesContentReader = null;//release instance
+        }
+    }
+
     public int getMagic() {
         return magic;
     }
@@ -113,6 +133,6 @@ public class FileHeaderVisitor extends ZipVisitor{
         bytesContentReader.readByte(fileNameContent);
         bytesContentReader.readByte(extraFieldContent);
         bytesContentReader.readByte(compressionData);
-        
+        length = bytesContentReader.getPosition();
     }
 }
